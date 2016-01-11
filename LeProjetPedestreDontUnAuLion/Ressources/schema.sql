@@ -90,6 +90,7 @@ CREATE TABLE livraison
     idLivraison int PRIMARY KEY,
     dateEstime date,
     statuLivraison ENUM ('encours','envoyé','annulé'),
+    /////MANQUE LA COMMANDE/////
 )
 
 CREATE TABLE promo
