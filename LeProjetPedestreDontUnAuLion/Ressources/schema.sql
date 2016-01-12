@@ -16,6 +16,7 @@ CREATE TABLE fichierImage
     tempsExposition int,
     ouverture int, 
     iso int,
+    client VARCHAR(100) FOREIGN KEY references client(mail)
 )
 
 CREATE TABLE photo
@@ -47,22 +48,22 @@ CREATE TABLE livre
     preface VARCHAR(100),
     postface VARCHAR(100),
     titrCouv VARCHAR(100),
-    
-    photoCouv int FOREIGN KEY references photo(titrPhoto),
+    photoCouv int FOREIGN KEY references photo(titrePhoto),
+    FOREIGN KEY idLivre references album(idAlbum)
 )
 
 CREATE TABLE calendrier
 (
     idCalendrier int PRIMARY KEY,
-    typCalendrier ENUM ('mural','bureau'),
-    
+    typeCalendrier ENUM ('mural','bureau'),
+    FOREIGN KEY idCalendrier references album(idAlbum)
 )
 
 CREATE TABLE agenda
 (
     idAgenda int PRIMARY KEY,
-    idAlbum int FOREIGN KEY references album(idAlbum),
-    ...
+    typeAgenda ENUM ('jour','semaine'),
+    FOREIGN KEY idAgenda references album(idAlbum)
 )
 
 CREATE TABLE commande
@@ -70,18 +71,23 @@ CREATE TABLE commande
     refCommandande int PRIMARY KEY,
     dateCommande date,
     prixTotal int, 
-    statuCommande ENUM ('encours','envoyé','annulé'),
-    //////MANQUE LE CLIENT///////
+    statuCommande ENUM ('encours','envoye','annule'),
+    mailClient VARCHAR(100) FOREIGN KEY references client(mail)
 )
 
-CREATE TABLE albumCommande
+CREATE TABLE prestataire
+(
+    idPrestataire int PRIMARY KEY,
+    preference ENUM ('1','2','3'),
+)
+
+CREATE TABLE Article
 (
     quantité int,
-    
     refCommmande int FOREIGN KEY references commande(refCommande),
     idAlbum int FOREIGN KEY references album(idAlbum),
     idFormat int FOREIGN KEY references format(idFormat),
-
+	idPrestataire int FOREIGN KEY references prestataire(idPrestataire),
     PRIMARY KEY (refCommande, idAlbum)
 )
 
@@ -89,8 +95,8 @@ CREATE TABLE livraison
 (
     idLivraison int PRIMARY KEY,
     dateEstime date,
-    statuLivraison ENUM ('encours','envoyé','annulé'),
-    /////MANQUE LA COMMANDE/////
+    statuLivraison ENUM ('encours','envoye','annule'),
+    refCommande int FOREIGN KEY commande(refCommande)
 )
 
 CREATE TABLE promo
@@ -124,11 +130,7 @@ CREATE TABLE formatDispositif
     PRIMARY KEY (idFormat, idDispositif)
 )
 
-CREATE TABLE prestataire
-)
-    idPrestataire int PRIMARY KEY,
-    preference ENUM ('1','2','3'),
-)
+
 
 CREATE TABLE formatPrestataire
 (

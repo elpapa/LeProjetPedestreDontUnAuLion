@@ -14,10 +14,10 @@ public class FichierImage {
 	private int tempsExposition;
 	private int iso;
 	private int ouverture;
-	
+	private Client client;
 	
 	public FichierImage(int idImage, String path, int resolution, boolean partage, int tempsExposition, int iso,
-			int ouverture) {
+			int ouverture, Client client) {
 		super();
 		this.idImage = idImage;
 		this.path = path;
@@ -26,7 +26,17 @@ public class FichierImage {
 		this.tempsExposition = tempsExposition;
 		this.iso = iso;
 		this.ouverture = ouverture;
+		this.client = client;
 	}
+	
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
 	public int getIdImage() {
 		return idImage;
 	}
