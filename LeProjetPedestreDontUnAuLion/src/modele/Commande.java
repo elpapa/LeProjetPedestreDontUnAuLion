@@ -14,7 +14,10 @@ public class Commande {
 	private int prixTotal;
 	private Client client;
 	private String status;
+	private boolean paye;
 	
+	
+
 	public Commande(int refCommande, Date dateCommande, int prixTotal, Client client, String status) {
 		super();
 		this.refCommande = refCommande;
@@ -22,7 +25,19 @@ public class Commande {
 		this.prixTotal = prixTotal;
 		this.client = client;
 		this.status = status;
+		this.paye = false;
 	}
+	
+
+	public boolean isPaye() {
+		return paye;
+	}
+
+
+	public void setPaye(boolean paye) {
+		this.paye = paye;
+	}
+
 
 	public int getRefCommande() {
 		return refCommande;

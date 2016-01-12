@@ -72,7 +72,8 @@ CREATE TABLE commande
     dateCommande date,
     prixTotal int, 
     statuCommande ENUM ('encours','envoye','annule'),
-    mailClient VARCHAR(100) FOREIGN KEY references client(mail)
+    mailClient VARCHAR(100) FOREIGN KEY references client(mail),
+    paye boolean 
 )
 
 CREATE TABLE prestataire
