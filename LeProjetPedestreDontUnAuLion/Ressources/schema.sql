@@ -1,6 +1,6 @@
 CREATE TABLE client
 (
-    mail VARCHAR(100) PRIMARY KEY NOT NULL,
+    mail VARCHAR(100) PRIMARY KEY,
     nom VARCHAR(100),
     prenom VARCHAR(100),
     adressePostale VARCHAR(255),
@@ -9,7 +9,7 @@ CREATE TABLE client
 
 CREATE TABLE fichierImage
 (
-    idFichierImage int PRIMARY KEY NOT NULL,
+    idFichierImage int PRIMARY KEY,
     cheminAcces VARCHAR(100),
     resolution int,
     partage BOOL NOT NULL DEFAULT '0',

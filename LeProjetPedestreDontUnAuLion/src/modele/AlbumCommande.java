@@ -10,14 +10,14 @@ public class AlbumCommande {
 	private Commande commande;
 	private Album album;
 	private Format format;
-	private int quantité;
+	private int quantite;
 	
 	public AlbumCommande(Commande commande, Album album, Format format, int quantité) {
 		super();
 		this.commande = commande;
 		this.album = album;
 		this.format = format;
-		this.quantité = quantité;
+		this.quantite = quantité;
 	}
 
 	public Commande getCommande() {
@@ -45,11 +45,11 @@ public class AlbumCommande {
 	}
 
 	public int getQuantité() {
-		return quantité;
+		return quantite;
 	}
 
 	public void setQuantité(int quantité) {
-		this.quantité = quantité;
+		this.quantite = quantité;
 	}
 	
 	
