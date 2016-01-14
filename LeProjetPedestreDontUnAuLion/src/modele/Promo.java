@@ -8,14 +8,14 @@ package modele;
 public class Promo {
 
 	private int idPromo;
-	private Commande utilisePourCommande;
 	private Client client;
+	private float montant;
 	
-	public Promo(int idPromo, Commande utilisePourCommande, Client client) {
+	public Promo(int idPromo,  Client client, float montant) {
 		super();
 		this.idPromo = idPromo;
-		this.utilisePourCommande = utilisePourCommande;
 		this.client = client;
+		this.montant = montant;
 	}
 	public int getIdPromo() {
 		return idPromo;
@@ -23,17 +23,17 @@ public class Promo {
 	public void setIdPromo(int idPromo) {
 		this.idPromo = idPromo;
 	}
-	public Commande getUtilisePourCommande() {
-		return utilisePourCommande;
-	}
-	public void setUtilisePourCommande(Commande utilisePourCommande) {
-		this.utilisePourCommande = utilisePourCommande;
-	}
 	public Client getClient() {
 		return client;
 	}
 	public void setClient(Client client) {
 		this.client = client;
+	}
+	public float getMontant() {
+		return montant;
+	}
+	public void setMontant(float montant) {
+		this.montant = montant;
 	}
 	
 }

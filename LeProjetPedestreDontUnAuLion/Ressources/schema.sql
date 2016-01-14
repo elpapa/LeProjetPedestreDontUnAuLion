@@ -174,10 +174,9 @@ CREATE TABLE livraison
 
 CREATE TABLE promo
 (
-    idPromo int PRIMARY KEY,
-    refCommande int, 
+    idPromo int PRIMARY KEY, 
     mailClient VARCHAR(100), 
-    CONSTRAINT cprom_1 FOREIGN KEY(refCommande) references commande(refCommande),
+    montant float,
     CONSTRAINT cprom_2 FOREIGN KEY(mailClient) references client(mail)
 );
 
