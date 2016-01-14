@@ -7,17 +7,28 @@ package modele;
  */
 public class Photo {
 
+	private int id;
 	private String titre;
 	private String commentaire;
 	private FichierImage image;
 	
 	
-	public Photo(String titre, String commentaire, FichierImage image) {
+	public Photo(int id, String titre, String commentaire, FichierImage image) {
 		super();
 		this.titre = titre;
 		this.commentaire = commentaire;
 		this.image = image;
+		this.id = id;
 	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public String getTitre() {
 		return titre;
 	}
