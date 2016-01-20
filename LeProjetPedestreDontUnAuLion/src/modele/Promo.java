@@ -10,12 +10,21 @@ public class Promo {
 	private int idPromo;
 	private Client client;
 	private float montant;
+	private Commande commande;
 	
-	public Promo(int idPromo,  Client client, float montant) {
+	
+	public Promo(int idPromo, Client client, float montant, Commande commande) {
 		super();
 		this.idPromo = idPromo;
 		this.client = client;
 		this.montant = montant;
+		this.commande = commande;
+	}
+	public Commande getCommande() {
+		return commande;
+	}
+	public void setCommande(Commande commande) {
+		this.commande = commande;
 	}
 	public int getIdPromo() {
 		return idPromo;
