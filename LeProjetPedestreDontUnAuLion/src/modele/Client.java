@@ -62,6 +62,6 @@ public class Client {
 	public void setDesactivate(boolean desactivate) {
 		this.desactivate = desactivate;
 	}
-	
+	//change
 	
 }

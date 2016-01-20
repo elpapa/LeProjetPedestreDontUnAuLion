@@ -16,7 +16,7 @@ DROP TABLE fichierImage;
 DROP TABLE client;
 DROP TABLE prestataire;
 
-
+--change
 CREATE TABLE client
 (
     mail VARCHAR(100) PRIMARY KEY,
