@@ -23,7 +23,9 @@ CREATE TABLE client
     nom VARCHAR(100),
     prenom VARCHAR(100),
     adressePostale VARCHAR(255),
-    motDePasse VARCHAR(255)
+    motDePasse VARCHAR(255),
+    desactive int,
+    CONSTRAINT cli_1 CHECK (desactive IN (0,1))
 );
 
 CREATE TABLE fichierImage

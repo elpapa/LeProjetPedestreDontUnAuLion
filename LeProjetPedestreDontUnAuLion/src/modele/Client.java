@@ -12,14 +12,16 @@ public class Client {
 	private String prenom;
 	private String adressePostale;
 	private String password;
+	private boolean desactivate;
 	
-	public Client(String mail, String nom, String prenom, String adressePostale, String password) {
+	public Client(String mail, String nom, String prenom, String adressePostale, String password, boolean desactivate) {
 		super();
 		this.mail = mail;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.adressePostale = adressePostale;
 		this.password = password;
+		this.desactivate = desactivate;
 	}
 	
 	public String getMail() {
@@ -51,6 +53,14 @@ public class Client {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public boolean isDesactivate() {
+		return desactivate;
+	}
+
+	public void setDesactivate(boolean desactivate) {
+		this.desactivate = desactivate;
 	}
 	
 	
