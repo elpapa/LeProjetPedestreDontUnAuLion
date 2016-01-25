@@ -1,4 +1,4 @@
-package modele;
+package modele.metier;
 
 public class AgendaJour extends Agenda {
 
