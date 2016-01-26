@@ -2,8 +2,11 @@ package modele.requete;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import modele.metier.Client;
 import modele.metier.FichierImage;
 
 public class RequeteFichierImage {
@@ -25,5 +28,64 @@ public class RequeteFichierImage {
 		st.setInt(7, fi.getIso());
 		st.setString(8, fi.getClient().getMail());
 		st.executeUpdate();
+	}
+	
+	public ArrayList<FichierImage> getAllFichierImageFromClient(Connection conn, Client client) throws SQLException{
+		int id, resolution, expo, iso, ouverture;
+		boolean partage;
+		String path;
+		
+		//requete SQL
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM fichierImage WHERE client = ?");
+		st.setString(1, client.getMail());
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		ArrayList<FichierImage> res = new ArrayList<FichierImage>();
+		while(rs.next()){
+			id = rs.getInt("idFichierImage");
+			resolution = rs.getInt("resolution");
+			expo = rs.getInt("exposition");
+			ouverture = rs.getInt("ouverture");
+			iso = rs.getInt("iso");
+			partage = util.getBooleanFromInt(rs.getInt("partage"));
+			path = rs.getString("cheminAcces");
+			res.add(new FichierImage(id, path, resolution, partage, expo, iso, ouverture, client));
+		}
+		
+		return res;
+	}
+	
+	public void deleteFichierImageFromId(Connection conn, int id) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("Delete from fichierImage where idFichierImage = ?");
+		st.setInt(1, id);
+		st.executeUpdate();
+	}
+	
+	public FichierImage getFichierImageFromId (Connection conn, int id) throws SQLException{
+		FichierImage FI = null;
+		int resolution, expo, iso, ouverture;
+		boolean partage;
+		String path, mail;
+		
+		//requete SQL
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM fichierImage WHERE idFichierImage = ?");
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		if(rs.next()){
+			resolution = rs.getInt("resolution");
+			expo = rs.getInt("exposition");
+			ouverture = rs.getInt("ouverture");
+			iso = rs.getInt("iso");
+			partage = util.getBooleanFromInt(rs.getInt("partage"));
+			path = rs.getString("cheminAcces");
+			mail = rs.getString("client");
+			Client client = new RequeteClient().getClientByMail(conn, mail);
+			FI = new FichierImage(id, path, resolution, partage, expo, iso, ouverture, client);
+		}
+		
+		return FI;
 	}
 }
