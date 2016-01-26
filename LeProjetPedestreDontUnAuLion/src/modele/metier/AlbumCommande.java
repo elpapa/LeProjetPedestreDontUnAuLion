@@ -54,9 +54,6 @@ public class AlbumCommande {
 		return quantite;
 	}
 
-	public void setQuantité(int quantite) {
-		this.quantite = quantite;
-	}
 	
 	
 }
