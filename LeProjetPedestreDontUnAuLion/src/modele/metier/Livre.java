@@ -14,7 +14,7 @@ public class Livre extends Album {
 	
 	public Livre(int idAlbum, Client proprietaire, String preface, String postface, Photo couverture,
 			String titreCouverture) {
-		super(idAlbum, proprietaire);
+		super(idAlbum, proprietaire, null);
 		this.preface = preface;
 		this.postface = postface;
 		this.couverture = couverture;

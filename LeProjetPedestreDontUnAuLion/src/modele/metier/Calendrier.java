@@ -24,7 +24,7 @@ public abstract class Calendrier extends Album {
 	public Calendrier(int idAlbum, Client proprietaire, Photo janvier, Photo fevrier, Photo mars, Photo avril,
 			Photo mai, Photo juin, Photo juillet, Photo aout, Photo septembre, Photo octobre, Photo novembre,
 			Photo decembre, Photo couverture) {
-		super(idAlbum, proprietaire);
+		super(idAlbum, proprietaire, null);
 		this.janvier = janvier;
 		this.fevrier = fevrier;
 		this.mars = mars;
