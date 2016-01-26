@@ -1,5 +1,7 @@
 package modele.metier;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author leovidal
@@ -13,9 +15,12 @@ public class Format {
 	private int resolutionMini;
 	private int nbPhotoJour;
 	private int stockPapier;
+	private ArrayList<FormatDispositif> listeDispositif;
 	
-	public Format(int idFormat, int prixUnitaire, String libelle, int resolutionMini, int nbPhotoJour,
-			int stockPapier) {
+	
+
+	public Format(int idFormat, int prixUnitaire, String libelle, int resolutionMini, int nbPhotoJour, int stockPapier,
+			ArrayList<FormatDispositif> listeDispositif) {
 		super();
 		this.idFormat = idFormat;
 		this.prixUnitaire = prixUnitaire;
@@ -23,6 +28,15 @@ public class Format {
 		this.resolutionMini = resolutionMini;
 		this.nbPhotoJour = nbPhotoJour;
 		this.stockPapier = stockPapier;
+		this.listeDispositif = listeDispositif;
+	}
+
+	public ArrayList<FormatDispositif> getListeDispositif() {
+		return listeDispositif;
+	}
+
+	public void setListeDispositif(ArrayList<FormatDispositif> listeDispositif) {
+		this.listeDispositif = listeDispositif;
 	}
 
 	public int getIdFormat() {

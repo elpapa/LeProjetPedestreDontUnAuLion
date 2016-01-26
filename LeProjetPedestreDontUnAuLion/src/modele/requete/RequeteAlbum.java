@@ -8,9 +8,14 @@ import java.util.ArrayList;
 
 import modele.metier.*;
 
-public class RequeteAlbum {
+public class RequeteAlbum extends Requete{
 
-	public ArrayList<Album> getAllAlbumFromClient (Connection conn, Client client) throws SQLException{
+	public RequeteAlbum(Connection connection) {
+		super(connection);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ArrayList<Album> getAllAlbumFromClient (Client client) throws SQLException{
 		int idAlbum;
 		
 		//requete SQL
@@ -22,13 +27,13 @@ public class RequeteAlbum {
 		ArrayList<Album> res = new ArrayList<Album>();
 		while(rs.next()){
 			idAlbum = rs.getInt("idAlbum");
-			res.add(new Album(idAlbum, client, new RequetePhoto().getAllPhotoFromAlbumId(conn, idAlbum)));
+			res.add(new Album(idAlbum, client, new RequetePhoto(conn).getAllPhotoFromAlbumId(idAlbum)));
 		}
 		
 		return res;
 	}
 	
-	public void addAlbum(Connection conn, Album album) throws SQLException{
+	public void addAlbum(Album album) throws SQLException{
 		//recuperer l'id max d'une table
 		int id = new Utilitaires().getMaxIdPlusUn(conn, "Album");
 		
@@ -39,7 +44,7 @@ public class RequeteAlbum {
 		st.executeUpdate();
 	}
 	
-	public Album getAlbumFromId(Connection conn, int id) throws SQLException{
+	public Album getAlbumFromId(int id) throws SQLException{
 		Client client;
 		Album album = null;
 		//requete SQL
@@ -49,8 +54,8 @@ public class RequeteAlbum {
 		
 		//resultat
 		if(rs.next()){
-			client = new RequeteClient().getClientByMail(conn, rs.getString("client"));
-			album = new Album(id, client, new RequetePhoto().getAllPhotoFromAlbumId(conn, id));
+			client = new RequeteClient(conn).getClientByMail(rs.getString("client"));
+			album = new Album(id, client, new RequetePhoto(conn).getAllPhotoFromAlbumId(id));
 		}
 		return album;
 	}

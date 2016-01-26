@@ -9,11 +9,16 @@ import java.util.ArrayList;
 import modele.metier.Client;
 import modele.metier.FichierImage;
 
-public class RequeteFichierImage {
+public class RequeteFichierImage extends Requete{
 	
+	public RequeteFichierImage(Connection connection) {
+		super(connection);
+		// TODO Auto-generated constructor stub
+	}
+
 	Utilitaires util = new Utilitaires();
 
-	public void addFichierImage (Connection conn, FichierImage fi) throws SQLException{
+	public void addFichierImage (FichierImage fi) throws SQLException{
 		//recuperer l'id max d'une table
 		int id = new Utilitaires().getMaxIdPlusUn(conn, "FichierImage");
 		
@@ -30,7 +35,7 @@ public class RequeteFichierImage {
 		st.executeUpdate();
 	}
 	
-	public ArrayList<FichierImage> getAllFichierImageFromClient(Connection conn, Client client) throws SQLException{
+	public ArrayList<FichierImage> getAllFichierImageFromClient(Client client) throws SQLException{
 		int id, resolution, expo, iso, ouverture;
 		boolean partage;
 		String path;
@@ -56,13 +61,13 @@ public class RequeteFichierImage {
 		return res;
 	}
 	
-	public void deleteFichierImageFromId(Connection conn, int id) throws SQLException{
+	public void deleteFichierImageFromId(int id) throws SQLException{
 		PreparedStatement st = conn.prepareStatement("Delete from fichierImage where idFichierImage = ?");
 		st.setInt(1, id);
 		st.executeUpdate();
 	}
 	
-	public FichierImage getFichierImageFromId (Connection conn, int id) throws SQLException{
+	public FichierImage getFichierImageFromId (int id) throws SQLException{
 		FichierImage FI = null;
 		int resolution, expo, iso, ouverture;
 		boolean partage;
@@ -82,7 +87,7 @@ public class RequeteFichierImage {
 			partage = util.getBooleanFromInt(rs.getInt("partage"));
 			path = rs.getString("cheminAcces");
 			mail = rs.getString("client");
-			Client client = new RequeteClient().getClientByMail(conn, mail);
+			Client client = new RequeteClient(conn).getClientByMail(mail);
 			FI = new FichierImage(id, path, resolution, partage, expo, iso, ouverture, client);
 		}
 		

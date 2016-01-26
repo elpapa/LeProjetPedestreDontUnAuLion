@@ -4,17 +4,22 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
-import modele.metier.Album;
-import modele.metier.Client;
-import modele.metier.Format;
+import modele.metier.*;
 
-public class RequeteFormat{
+public class RequeteFormat extends Requete{
 
-	public Format getFormatById(Connection conn, int idFormat) throws SQLException{
+	public RequeteFormat(Connection connection) {
+		super(connection);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Format getFormatById(int idFormat) throws SQLException{
 		int resolutionMini, prixUnitaire, nbPhotoJour, stockPapier;
 		String libelle;
 		Format format = null;
+		
 		
 		//requete SQL
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM format WHERE idFormat = ?");
@@ -28,9 +33,30 @@ public class RequeteFormat{
 			nbPhotoJour = rs.getInt("nbPhotoJour");
 			stockPapier = rs.getInt("stockPapier");
 			libelle = rs.getString("libelle");
+			ArrayList<FormatDispositif> liste = getFormatDispositifFromFormatId(idFormat);
+			//TODO ArrayList<FormatDispositif>
 			
-			format = new Format(idFormat, prixUnitaire, libelle, resolutionMini, nbPhotoJour, stockPapier);
+			format = new Format(idFormat, prixUnitaire, libelle, resolutionMini, nbPhotoJour, stockPapier, liste);
 		}
 		return format;
+	}
+	
+	public ArrayList<FormatDispositif> getFormatDispositifFromFormatId (int idFormat) throws SQLException{
+		int idDispositif, quantite;
+		
+		//requete SQL
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM formatDispositif WHERE idFormat = ?");
+		st.setInt(1, idFormat);
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		ArrayList<FormatDispositif> res = new ArrayList<FormatDispositif>();
+		while(rs.next()){
+			idDispositif = rs.getInt("idDispositif");
+			quantite = rs.getInt("quantitePossible");
+			res.add(new FormatDispositif(new RequeteDispositif(conn).getDispositifById(idDispositif), quantite));
+		}
+		
+		return res;
 	}
 }

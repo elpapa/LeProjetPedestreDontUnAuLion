@@ -9,11 +9,16 @@ import java.util.ArrayList;
 
 import modele.metier.*;
 
-public class RequeteCommande {
+public class RequeteCommande extends Requete{
 	
+	public RequeteCommande(Connection connection) {
+		super(connection);
+		// TODO Auto-generated constructor stub
+	}
+
 	public Utilitaires util = new Utilitaires();
 
-	public ArrayList<Commande> getAllCommandeFromClient (Connection conn, Client client) throws SQLException{
+	public ArrayList<Commande> getAllCommandeFromClient (Client client) throws SQLException{
 		int refCommande, prixTotal;
 		boolean paye;
 		String statutCommande;
@@ -33,13 +38,13 @@ public class RequeteCommande {
 			statutCommande = rs.getString("statutCommande");
 			dateCommande = rs.getDate("dateCommande");
 			
-			res.add(new Commande(refCommande, dateCommande, prixTotal, client, statutCommande, paye, getAllArticleFromCommandeId(conn, refCommande)));
+			res.add(new Commande(refCommande, dateCommande, prixTotal, client, statutCommande, paye, getAllArticleFromCommandeId(refCommande)));
 		}
 		
 		return res;
 	}
 	
-	public ArrayList<AlbumCommande> getAllArticleFromCommandeId(Connection conn, int refCommande) throws SQLException{
+	public ArrayList<AlbumCommande> getAllArticleFromCommandeId(int refCommande) throws SQLException{
 		Album album;
 		Format format;
 		int quantite, idAlbum, idPrestataire, idFormat;
@@ -57,9 +62,9 @@ public class RequeteCommande {
 			idFormat = rs.getInt("idFormat");
 			idPrestataire = rs.getInt("idPrestataire");
 			quantite = rs.getInt("quantite");
-			album = new RequeteAlbum().getAlbumFromId(conn, idAlbum);
-			format = new RequeteFormat().getFormatById(conn, idFormat);
-			prestataire = new RequetePrestataire().getPrestataireById(conn, idPrestataire);
+			album = new RequeteAlbum(conn).getAlbumFromId(idAlbum);
+			format = new RequeteFormat(conn).getFormatById(idFormat);
+			prestataire = new RequetePrestataire(conn).getPrestataireById(idPrestataire);
 			res.add(new AlbumCommande(album, format, quantite, prestataire));
 		}
 		

@@ -8,8 +8,13 @@ import java.sql.SQLException;
 import modele.metier.Format;
 import modele.metier.Prestataire;
 
-public class RequetePrestataire{
-	public Prestataire getPrestataireById(Connection conn, int idPrestataire) throws SQLException{
+public class RequetePrestataire extends Requete{
+	public RequetePrestataire(Connection connection) {
+		super(connection);
+		// TODO Auto-generated constructor stub
+	}
+
+	public Prestataire getPrestataireById(int idPrestataire) throws SQLException{
 		int preference;
 		Prestataire presta = null;
 		

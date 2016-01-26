@@ -7,11 +7,16 @@ import java.sql.SQLException;
 
 import modele.metier.Client;
 
-public class RequeteClient {
+public class RequeteClient extends Requete{
 	
+	public RequeteClient(Connection connection) {
+		super(connection);
+		// TODO Auto-generated constructor stub
+	}
+
 	Utilitaires util = new Utilitaires();
 
-	public Client getClientByMail(Connection conn, String mail) throws SQLException{
+	public Client getClientByMail(String mail) throws SQLException{
 		Client client;
 		String nom, prenom, adresse, password;
 		int desactivate;
@@ -38,7 +43,7 @@ public class RequeteClient {
 		return client;
 	}
 	
-	public void addClient(Connection conn, Client client) throws SQLException{
+	public void addClient(Client client) throws SQLException{
 		PreparedStatement st = conn.prepareStatement("INSERT INTO client VALUES (?,?,?,?,?,?)");
 		// Execute the query
 		st.setString(1, client.getMail());
