@@ -15,7 +15,7 @@ public class RequetePhoto {
 		String titre, commentaire;
 		
 		//requete SQL
-		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo P, fichierImage F WHERE P.idFichierImage = F.idFichierImage AND client = ?");
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo P WHERE client = ?");
 		st.setString(1, client.getMail());
 		ResultSet rs = st.executeQuery();
 		
@@ -59,4 +59,25 @@ public class RequetePhoto {
 		st.executeUpdate();
 	}
 	
+	public ArrayList<Photo> getAllPhotoFromAlbumId (Connection conn, int idAlbum) throws SQLException{
+		int idPhoto, idFichierImage;
+		String titre, commentaire;
+		
+		//requete SQL
+		PreparedStatement st = conn.prepareStatement("SELECT P.idPhoto, P.titrePhoto, P.commentaire, P.idFichierImage FROM photo P, albumPhoto A WHERE A.idPhoto = P.idPhoto AND A.idAlbum = ?");
+		st.setInt(1, idAlbum);
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		ArrayList<Photo> res = new ArrayList<Photo>();
+		while(rs.next()){
+			idFichierImage = rs.getInt("idFichierImage");
+			idPhoto = rs.getInt("idPhoto");
+			titre = rs.getString("titre");
+			commentaire = rs.getString("commentaire");
+			res.add(new Photo(idPhoto, titre, commentaire, new RequeteFichierImage().getFichierImageFromId(conn, idFichierImage)));
+		}
+		
+		return res;
+	}
 }
