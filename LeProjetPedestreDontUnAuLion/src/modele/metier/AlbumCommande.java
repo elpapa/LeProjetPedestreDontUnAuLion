@@ -7,25 +7,31 @@ package modele.metier;
  */
 public class AlbumCommande {
 
-	private Commande commande;
 	private Album album;
 	private Format format;
 	private int quantite;
+	private Prestataire prestataire;
 	
-	public AlbumCommande(Commande commande, Album album, Format format, int quantite) {
+
+
+	public AlbumCommande(Album album, Format format, int quantite, Prestataire prestataire) {
 		super();
-		this.commande = commande;
 		this.album = album;
 		this.format = format;
 		this.quantite = quantite;
+		this.prestataire = prestataire;
 	}
 
-	public Commande getCommande() {
-		return commande;
+	public Prestataire getPrestataire() {
+		return prestataire;
 	}
 
-	public void setCommande(Commande commande) {
-		this.commande = commande;
+	public void setPrestataire(Prestataire prestataire) {
+		this.prestataire = prestataire;
+	}
+
+	public void setQuantite(int quantite) {
+		this.quantite = quantite;
 	}
 
 	public Album getAlbum() {

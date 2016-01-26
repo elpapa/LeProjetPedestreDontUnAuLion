@@ -1,6 +1,7 @@
 package modele.metier;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * 
@@ -15,19 +16,31 @@ public class Commande {
 	private Client client;
 	private String status;
 	private boolean paye;
-	
+	private ArrayList<AlbumCommande> articles;
 	
 
-	public Commande(int refCommande, Date dateCommande, int prixTotal, Client client, String status) {
+	public Commande(int refCommande, Date dateCommande, int prixTotal, Client client, String status, boolean paye,
+			ArrayList<AlbumCommande> articles) {
 		super();
 		this.refCommande = refCommande;
 		this.dateCommande = dateCommande;
 		this.prixTotal = prixTotal;
 		this.client = client;
 		this.status = status;
-		this.paye = false;
+		this.paye = paye;
+		this.articles = articles;
 	}
-	
+
+
+	public ArrayList<AlbumCommande> getArticles() {
+		return articles;
+	}
+
+
+	public void setArticles(ArrayList<AlbumCommande> articles) {
+		this.articles = articles;
+	}
+
 
 	public boolean isPaye() {
 		return paye;

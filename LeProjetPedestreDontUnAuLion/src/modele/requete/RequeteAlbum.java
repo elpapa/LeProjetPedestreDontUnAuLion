@@ -39,4 +39,20 @@ public class RequeteAlbum {
 		st.executeUpdate();
 	}
 	
+	public Album getAlbumFromId(Connection conn, int id) throws SQLException{
+		Client client;
+		Album album = null;
+		//requete SQL
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM album WHERE idAlbum = ?");
+		st.setInt(1, id);
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		if(rs.next()){
+			client = new RequeteClient().getClientByMail(conn, rs.getString("client"));
+			album = new Album(id, client, new RequetePhoto().getAllPhotoFromAlbumId(conn, id));
+		}
+		return album;
+	}
+	
 }
