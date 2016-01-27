@@ -11,7 +11,7 @@ import modele.*;
 public class Controleur {
 
 	private static Connection conn;
-	private static final String configurationFile = "BD.properties";
+	private static final String configurationFile = "Ressources/BD.properties";
 	
 	/**
 	 * Constructeur par défaut.
