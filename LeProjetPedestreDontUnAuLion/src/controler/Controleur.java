@@ -25,7 +25,13 @@ public class Controleur {
 			  username		= dap.getUsername();
 			  password		= dap.getPassword();
 		      // Load the database driver
-		      Class.forName(jdbcDriver) ;
+		      try {
+				Class.forName(jdbcDriver) ;
+			} catch (ClassNotFoundException e) {
+				System.out.println("driver non trouvé");
+				e.printStackTrace();
+				return;
+			}
 		      // Get a connection to the database
 		      conn = DriverManager.getConnection(dbUrl, username, password);
 			  // Print information about connection warnings
