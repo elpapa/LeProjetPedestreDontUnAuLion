@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 import modele.metier.*;
 
+/**
+ * testée sauf getPhotoFromAlbum
+ * @author vidalle
+ *
+ */
 public class RequetePhoto extends Requete{
 
 	public RequetePhoto(Connection connection) {
@@ -20,7 +25,7 @@ public class RequetePhoto extends Requete{
 		String titre, commentaire;
 		
 		//requete SQL
-		PreparedStatement st = conn.prepareStatement("SELECT * FROM photo P WHERE client = ?");
+		PreparedStatement st = conn.prepareStatement("SELECT idPhoto, titrePhoto, P.idFichierImage, commentaire FROM photo P, fichierImage F WHERE P.idFichierImage = F.idFichierImage AND client = ?");
 		st.setString(1, client.getMail());
 		ResultSet rs = st.executeQuery();
 		
@@ -29,7 +34,7 @@ public class RequetePhoto extends Requete{
 		while(rs.next()){
 			idFichierImage = rs.getInt("idFichierImage");
 			idPhoto = rs.getInt("idPhoto");
-			titre = rs.getString("titre");
+			titre = rs.getString("titrePhoto");
 			commentaire = rs.getString("commentaire");
 			res.add(new Photo(idPhoto, titre, commentaire, new RequeteFichierImage(conn).getFichierImageFromId(idFichierImage)));
 		}
@@ -50,7 +55,7 @@ public class RequetePhoto extends Requete{
 		//resultat
 		if(rs.next()){
 			idFichierImage = rs.getInt("idFichierImage");
-			titre = rs.getString("titre");
+			titre = rs.getString("titrePhoto");
 			commentaire = rs.getString("commentaire");
 			photo = new Photo(idPhoto, titre, commentaire, new RequeteFichierImage(conn).getFichierImageFromId(idFichierImage));
 		}
@@ -78,7 +83,7 @@ public class RequetePhoto extends Requete{
 		while(rs.next()){
 			idFichierImage = rs.getInt("idFichierImage");
 			idPhoto = rs.getInt("idPhoto");
-			titre = rs.getString("titre");
+			titre = rs.getString("titrePhoto");
 			commentaire = rs.getString("commentaire");
 			res.add(new Photo(idPhoto, titre, commentaire, new RequeteFichierImage(conn).getFichierImageFromId(idFichierImage)));
 		}
@@ -87,8 +92,10 @@ public class RequetePhoto extends Requete{
 	}
 	
 	public void addPhoto(Photo photo) throws SQLException{
+		int id = util.getMaxIdPlusUn(conn, "Photo");
+		
 		PreparedStatement st = conn.prepareStatement("INSERT INTO photo VALUES (?,?,?,?)");
-		st.setInt(1, photo.getId());
+		st.setInt(1, id);
 		st.setString(2, photo.getTitre());
 		st.setString(3, photo.getCommentaire());
 		st.setInt(4, photo.getImage().getIdImage());
@@ -96,9 +103,9 @@ public class RequetePhoto extends Requete{
 	}
 	
 	public void updatePhoto(Photo photo) throws SQLException{
-		PreparedStatement st = conn.prepareStatement("UPDATE photo SET (titre = ?, commentaire = ?) WHERE idPhoto = ? VALUES()");
+		PreparedStatement st = conn.prepareStatement("UPDATE photo SET titrePhoto = ?, commentaire = ? WHERE idPhoto = ?");
 		st.setString(1, photo.getTitre());
-		st.setString(1, photo.getCommentaire());
+		st.setString(2, photo.getCommentaire());
 		st.setInt(3, photo.getId());
 		st.executeUpdate();
 	}

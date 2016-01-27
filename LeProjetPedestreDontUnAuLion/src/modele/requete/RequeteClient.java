@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import modele.metier.Client;
 import modele.metier.FichierImage;
 
+/**
+ * testée
+ * @author vidalle
+ *
+ */
 public class RequeteClient extends Requete{
 	
 	public RequeteClient(Connection connection) {
@@ -67,7 +72,7 @@ public class RequeteClient extends Requete{
 		}
 		
 		//supprimer client
-		PreparedStatement st = conn.prepareStatement("Delete from client where idClient = ?");
+		PreparedStatement st = conn.prepareStatement("Delete from client where mail = ?");
 		st.setString(1, id);
 		st.executeUpdate();
 	}

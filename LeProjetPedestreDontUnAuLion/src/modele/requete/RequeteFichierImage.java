@@ -9,6 +9,11 @@ import java.util.ArrayList;
 import modele.metier.Client;
 import modele.metier.FichierImage;
 
+/**
+ * testée
+ * @author vidalle
+ *
+ */
 public class RequeteFichierImage extends Requete{
 	
 	public RequeteFichierImage(Connection connection) {
@@ -16,7 +21,6 @@ public class RequeteFichierImage extends Requete{
 		// TODO Auto-generated constructor stub
 	}
 
-	Utilitaires util = new Utilitaires();
 
 	public void addFichierImage (FichierImage fi) throws SQLException{
 		//recuperer l'id max d'une table
@@ -34,7 +38,7 @@ public class RequeteFichierImage extends Requete{
 		st.setString(8, fi.getClient().getMail());
 		st.executeUpdate();
 	}
-	
+
 	public ArrayList<FichierImage> getAllFichierImageFromClient(Client client) throws SQLException{
 		int id, resolution, expo, iso, ouverture;
 		boolean partage;
@@ -50,7 +54,7 @@ public class RequeteFichierImage extends Requete{
 		while(rs.next()){
 			id = rs.getInt("idFichierImage");
 			resolution = rs.getInt("resolution");
-			expo = rs.getInt("exposition");
+			expo = rs.getInt("tempsExposition");
 			ouverture = rs.getInt("ouverture");
 			iso = rs.getInt("iso");
 			partage = util.getBooleanFromInt(rs.getInt("partage"));
@@ -60,7 +64,7 @@ public class RequeteFichierImage extends Requete{
 		
 		return res;
 	}
-	
+
 	public void deleteFichierImageFromId(int id) throws SQLException{
 		PreparedStatement st = conn.prepareStatement("Delete from fichierImage where idFichierImage = ?");
 		st.setInt(1, id);
@@ -81,7 +85,7 @@ public class RequeteFichierImage extends Requete{
 		//resultat
 		if(rs.next()){
 			resolution = rs.getInt("resolution");
-			expo = rs.getInt("exposition");
+			expo = rs.getInt("tempsExposition");
 			ouverture = rs.getInt("ouverture");
 			iso = rs.getInt("iso");
 			partage = util.getBooleanFromInt(rs.getInt("partage"));
@@ -94,8 +98,9 @@ public class RequeteFichierImage extends Requete{
 		return FI;
 	}
 	
+	
 	public void updateFichierImage (FichierImage fi) throws SQLException{
-		PreparedStatement st = conn.prepareStatement("UPDATE fichierImage SET (cheminAcces = ?, partage = ?) WHERE idFichierImage = ? VALUES()");
+		PreparedStatement st = conn.prepareStatement("UPDATE fichierImage SET cheminAcces = ?, partage = ? WHERE idFichierImage = ?");
 		st.setString(1, fi.getPath());
 		st.setInt(2, util.getIntFromBoolean(fi.isPartage()));
 		st.setInt(3, fi.getIdImage());
