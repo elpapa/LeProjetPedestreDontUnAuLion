@@ -1,5 +1,6 @@
 package controler;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,8 +41,13 @@ public class Accueil {
 		RequeteAlbum ra = new RequeteAlbum(controleur.getConn());
 		//ra.addAlbum(album);
 		Album zob = ra.getAllAlbumFromClient(c).get(0);
-		zob.getListePhoto().add(p);
-		ra.addPhotoToAlbum(zob, p);
+		
+		Date date = new Date(2016, 01, 27);
+		Commande cmd = new Commande(0, date, 250, c, "envoye", false, new ArrayList<AlbumCommande>());
+		RequeteCommande rcmd = new RequeteCommande(controleur.getConn());
+		rcmd.addCommande(cmd);
+		
+		
 		
 
 	}
