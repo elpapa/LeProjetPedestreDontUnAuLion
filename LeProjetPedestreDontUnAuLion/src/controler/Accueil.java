@@ -35,10 +35,13 @@ public class Accueil {
 		Photo p = new Photo(0, "plage", "beach", fi2);
 		RequetePhoto rp = new RequetePhoto(controleur.getConn());
 		Photo ski = new Photo(0, "ski", "neige", fi2);
-		ArrayList<Photo> li = rp.getAllPhotoFromClient(c);
-		for(int i=0; i<li.size(); i++){
-			System.out.println(li.get(i).getTitre());
-		}
+		
+		Album album = new Album(0, c, null);
+		RequeteAlbum ra = new RequeteAlbum(controleur.getConn());
+		//ra.addAlbum(album);
+		Album zob = ra.getAllAlbumFromClient(c).get(0);
+		zob.getListePhoto().add(p);
+		ra.addPhotoToAlbum(zob, p);
 		
 
 	}
