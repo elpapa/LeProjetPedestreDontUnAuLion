@@ -93,4 +93,12 @@ public class RequeteFichierImage extends Requete{
 		
 		return FI;
 	}
+	
+	public void updateFichierImage (FichierImage fi) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("UPDATE fichierImage SET (cheminAcces = ?, partage = ?) WHERE idFichierImage = ? VALUES()");
+		st.setString(1, fi.getPath());
+		st.setInt(2, util.getIntFromBoolean(fi.isPartage()));
+		st.setInt(3, fi.getIdImage());
+		st.executeUpdate();
+	}
 }

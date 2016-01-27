@@ -33,10 +33,10 @@ public class RequeteFormat extends Requete{
 			nbPhotoJour = rs.getInt("nbPhotoJour");
 			stockPapier = rs.getInt("stockPapier");
 			libelle = rs.getString("libelle");
-			ArrayList<FormatDispositif> liste = getFormatDispositifFromFormatId(idFormat);
-			//TODO ArrayList<FormatDispositif>
+			ArrayList<FormatDispositif> listeD = getFormatDispositifFromFormatId(idFormat);
+			ArrayList<FormatPrestataire> listeP = getFormatPrestataireFromFormatId(idFormat);
 			
-			format = new Format(idFormat, prixUnitaire, libelle, resolutionMini, nbPhotoJour, stockPapier, liste);
+			format = new Format(idFormat, prixUnitaire, libelle, resolutionMini, nbPhotoJour, stockPapier, listeD, listeP);
 		}
 		return format;
 	}
@@ -55,6 +55,25 @@ public class RequeteFormat extends Requete{
 			idDispositif = rs.getInt("idDispositif");
 			quantite = rs.getInt("quantitePossible");
 			res.add(new FormatDispositif(new RequeteDispositif(conn).getDispositifById(idDispositif), quantite));
+		}
+		
+		return res;
+	}
+	
+	public ArrayList<FormatPrestataire> getFormatPrestataireFromFormatId (int idFormat) throws SQLException{
+		int idPrestataire, delais;
+		
+		//requete SQL
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM formatPrestataire WHERE idFormat = ?");
+		st.setInt(1, idFormat);
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		ArrayList<FormatPrestataire> res = new ArrayList<FormatPrestataire>();
+		while(rs.next()){
+			idPrestataire = rs.getInt("idPrestataire");
+			delais = rs.getInt("delaisEnJour");
+			res.add(new FormatPrestataire(new RequetePrestataire(conn).getPrestataireById(idPrestataire), delais));
 		}
 		
 		return res;

@@ -60,4 +60,18 @@ public class RequeteAlbum extends Requete{
 		return album;
 	}
 	
+	public void addPhotoToAlbum(Album album, Photo photo) throws SQLException{
+		//requete
+		PreparedStatement st = conn.prepareStatement("INSERT INTO albumPhoto VALUES (?,?)");
+		st.setInt(1, photo.getId());
+		st.setInt(2, album.getIdAlbum());
+		st.executeUpdate();
+	}
+	
+	public void deleteAlbumById(int idAlbum) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("Delete from album where idAlbum = ?");
+		st.setInt(1, idAlbum);
+		st.executeUpdate();
+	}
+	
 }

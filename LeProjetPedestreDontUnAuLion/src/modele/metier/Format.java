@@ -16,11 +16,12 @@ public class Format {
 	private int nbPhotoJour;
 	private int stockPapier;
 	private ArrayList<FormatDispositif> listeDispositif;
+	private ArrayList<FormatPrestataire> listePrestataire;
 	
 	
 
 	public Format(int idFormat, int prixUnitaire, String libelle, int resolutionMini, int nbPhotoJour, int stockPapier,
-			ArrayList<FormatDispositif> listeDispositif) {
+			ArrayList<FormatDispositif> listeDispositif, ArrayList<FormatPrestataire> listePrestataire) {
 		super();
 		this.idFormat = idFormat;
 		this.prixUnitaire = prixUnitaire;
@@ -29,6 +30,15 @@ public class Format {
 		this.nbPhotoJour = nbPhotoJour;
 		this.stockPapier = stockPapier;
 		this.listeDispositif = listeDispositif;
+		this.listePrestataire = listePrestataire;
+	}
+
+	public ArrayList<FormatPrestataire> getListePrestataire() {
+		return listePrestataire;
+	}
+
+	public void setListePrestataire(ArrayList<FormatPrestataire> listePrestataire) {
+		this.listePrestataire = listePrestataire;
 	}
 
 	public ArrayList<FormatDispositif> getListeDispositif() {

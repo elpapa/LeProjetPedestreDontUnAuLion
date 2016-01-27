@@ -85,4 +85,21 @@ public class RequetePhoto extends Requete{
 		
 		return res;
 	}
+	
+	public void addPhoto(Photo photo) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("INSERT INTO photo VALUES (?,?,?,?)");
+		st.setInt(1, photo.getId());
+		st.setString(2, photo.getTitre());
+		st.setString(3, photo.getCommentaire());
+		st.setInt(4, photo.getImage().getIdImage());
+		st.executeUpdate();
+	}
+	
+	public void updatePhoto(Photo photo) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("UPDATE photo SET (titre = ?, commentaire = ?) WHERE idPhoto = ? VALUES()");
+		st.setString(1, photo.getTitre());
+		st.setString(1, photo.getCommentaire());
+		st.setInt(3, photo.getId());
+		st.executeUpdate();
+	}
 }

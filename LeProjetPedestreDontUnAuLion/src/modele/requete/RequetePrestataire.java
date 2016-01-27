@@ -31,4 +31,21 @@ public class RequetePrestataire extends Requete{
 		}
 		return presta;
 	}
+	
+	public void addPrestataire(Prestataire p) throws SQLException{
+		//recuperer l'id max d'une table
+		int id = new Utilitaires().getMaxIdPlusUn(conn, "Prestataire");
+		
+		//requete
+		PreparedStatement st = conn.prepareStatement("INSERT INTO prestataire VALUES (?,?)");
+		st.setInt(1, id);
+		st.setInt(2, p.getPreference());
+		st.executeUpdate();
+	}
+	
+	public void deletePrestataireById(int id) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("Delete from prestataire where idPrestataire = ?");
+		st.setInt(1, id);
+		st.executeUpdate();
+	}
 }

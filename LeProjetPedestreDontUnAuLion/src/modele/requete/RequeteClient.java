@@ -4,8 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import modele.metier.Client;
+import modele.metier.FichierImage;
 
 public class RequeteClient extends Requete{
 	
@@ -13,8 +15,6 @@ public class RequeteClient extends Requete{
 		super(connection);
 		// TODO Auto-generated constructor stub
 	}
-
-	Utilitaires util = new Utilitaires();
 
 	public Client getClientByMail(String mail) throws SQLException{
 		Client client;
@@ -53,6 +53,22 @@ public class RequeteClient extends Requete{
 		st.setString(5, client.getPassword());
 		int d = util.getIntFromBoolean(client.isDesactivate());
 		st.setInt(6, d);
+		st.executeUpdate();
+	}
+	
+	public void deleteClientById(String id) throws SQLException{
+		//regrouper tous ses fichierImage
+		ArrayList<FichierImage> bob = new RequeteFichierImage(conn).getAllFichierImageFromClient(getClientByMail(id));
+		
+		//les passer en non partageable
+		for (int i=0; i<bob.size(); i++){
+			bob.get(i).setPartage(false);
+			new RequeteFichierImage(conn).updateFichierImage(bob.get(i));
+		}
+		
+		//supprimer client
+		PreparedStatement st = conn.prepareStatement("Delete from client where idClient = ?");
+		st.setString(1, id);
 		st.executeUpdate();
 	}
 }

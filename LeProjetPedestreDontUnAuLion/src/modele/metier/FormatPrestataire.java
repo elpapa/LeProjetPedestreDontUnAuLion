@@ -8,13 +8,11 @@ package modele.metier;
 public class FormatPrestataire {
 
 	private Prestataire prestataire;
-	private Format format;
 	private int delaisJour;
 	
-	public FormatPrestataire(Prestataire prestataire, Format format, int delaisJour) {
+	public FormatPrestataire(Prestataire prestataire, int delaisJour) {
 		super();
 		this.prestataire = prestataire;
-		this.format = format;
 		this.delaisJour = delaisJour;
 	}
 
@@ -24,14 +22,6 @@ public class FormatPrestataire {
 
 	public void setPrestataire(Prestataire prestataire) {
 		this.prestataire = prestataire;
-	}
-
-	public Format getFormat() {
-		return format;
-	}
-
-	public void setFormat(Format format) {
-		this.format = format;
 	}
 
 	public int getDelaisJour() {

@@ -17,7 +17,19 @@ public class Utilitaires {
 	public int getMaxIdPlusUn(Connection conn, String table) throws SQLException{
 		int max = 0;
 		
-		PreparedStatement st = conn.prepareStatement("SELECT max(id) as maxid FROM id"+table);
+		PreparedStatement st = conn.prepareStatement("SELECT max(id"+table+") as maxid FROM "+table);
+		ResultSet rs = st.executeQuery();
+		if(rs.next()){
+			max = rs.getInt("maxid") + 1;
+		}
+		
+		return max;
+	}
+	
+	public int getMaxRefCommandePlusUn(Connection conn) throws SQLException{
+		int max = 0;
+		
+		PreparedStatement st = conn.prepareStatement("SELECT max(refCommande) as maxid FROM commande");
 		ResultSet rs = st.executeQuery();
 		if(rs.next()){
 			max = rs.getInt("maxid") + 1;

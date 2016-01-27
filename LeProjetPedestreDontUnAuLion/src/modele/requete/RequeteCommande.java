@@ -16,8 +16,6 @@ public class RequeteCommande extends Requete{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Utilitaires util = new Utilitaires();
-
 	public ArrayList<Commande> getAllCommandeFromClient (Client client) throws SQLException{
 		int refCommande, prixTotal;
 		boolean paye;
@@ -69,5 +67,56 @@ public class RequeteCommande extends Requete{
 		}
 		
 		return res;
+	}
+	
+	public Commande getCommandeByRef (int ref) throws SQLException{
+		int prixTotal;
+		boolean paye;
+		String statutCommande;
+		Date dateCommande;
+		Commande res = null;
+		Client client;
+		
+		PreparedStatement st = conn.prepareStatement("SELECT * FROM commande WHERE refCommande = ?");
+		st.setInt(1, ref);
+		ResultSet rs = st.executeQuery();
+		
+		//resultat
+		if(rs.next()){
+			prixTotal = rs.getInt("prixTotal");
+			paye = util.getBooleanFromInt(rs.getInt("paye"));
+			statutCommande = rs.getString("statutCommande");
+			client = new RequeteClient(conn).getClientByMail(rs.getString("mailClient"));
+			dateCommande = rs.getDate("dateCommande");
+			
+			res = new Commande(ref, dateCommande, prixTotal, client, statutCommande, paye, getAllArticleFromCommandeId(ref));
+		}
+		
+		return res;
+	}
+	
+	public void addCommande(Commande c) throws SQLException{
+		
+		//recuperer l'id max d'une table
+		int refCommande = util.getMaxRefCommandePlusUn(conn);
+		
+		//requete
+		PreparedStatement st = conn.prepareStatement("INSERT INTO commande VALUES (?,?,?,?,?,?)");
+		st.setInt(1, refCommande);
+		st.setDate(2, c.getDateCommande());
+		st.setInt(3, c.getPrixTotal());
+		st.setString(4, c.getStatus());
+		st.setString(5, c.getClient().getMail());
+		st.setInt(6, util.getIntFromBoolean(c.isPaye()));
+		st.executeUpdate();
+		
+	}
+	
+	public void updateCommande(Commande c) throws SQLException{
+		PreparedStatement st = conn.prepareStatement("UPDATE commande SET (statut = ?, paye = ?) WHERE refCommande = ?");
+		st.setString(1, c.getStatus());
+		st.setInt(2, util.getIntFromBoolean(c.isPaye()));
+		st.setInt(3, c.getRefCommande());
+		st.executeUpdate();
 	}
 }
