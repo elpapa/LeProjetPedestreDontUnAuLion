@@ -213,4 +213,16 @@ CREATE TABLE formatPrestataire
     PRIMARY KEY (idFormat, idPrestataire)
 );
 
+CREATE TABLE fileAttente(
+	idFichierImage int PRIMARY KEY,
+    cheminAcces VARCHAR(100),
+    resolution int,
+    partage int NOT NULL,
+    tempsExposition int,
+    ouverture int, 
+    iso int,
+    client VARCHAR(100),
+    CONSTRAINT fic_1 FOREIGN KEY(client) references client(mail),  
+    CONSTRAINT fic_2 CHECK (partage IN (0,1))
+);
 
