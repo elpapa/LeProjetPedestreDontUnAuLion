@@ -54,6 +54,7 @@ CREATE TABLE photo
 CREATE TABLE album
 (
     idAlbum int PRIMARY KEY NOT NULL,
+    nom VARCHAR(50),
     client VARCHAR(100), 
     CONSTRAINT ca_1 FOREIGN KEY(client) references client(mail)    
 );

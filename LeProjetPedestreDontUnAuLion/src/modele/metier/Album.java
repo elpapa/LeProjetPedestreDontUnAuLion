@@ -6,11 +6,13 @@ public class Album {
 
 	private int idAlbum;
 	private Client proprietaire;
+	private String nom;
 	private ArrayList<Photo> listePhoto;
 
-	public Album(int idAlbum, Client proprietaire, ArrayList<Photo> listePhoto) {
+	public Album(int idAlbum, Client proprietaire, String nom, ArrayList<Photo> listePhoto) {
 		this.idAlbum = idAlbum;
 		this.proprietaire = proprietaire;
+		this.nom = nom;
 		this.listePhoto = listePhoto;
 	}
 
@@ -36,6 +38,14 @@ public class Album {
 
 	public void setProprietaire(Client proprietaire) {
 		this.proprietaire = proprietaire;
+	}
+
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
 	}
 	
 	

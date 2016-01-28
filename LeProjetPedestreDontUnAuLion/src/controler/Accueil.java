@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vue.Menu;
 import modele.requete.*;
+import vue.client.Menu;
 import modele.metier.*;
 
 public class Accueil {
@@ -14,19 +14,14 @@ public class Accueil {
 		
 		Controleur controleur = new Controleur();
 		
-//		Menu menu = new Menu();
-//		boolean connected = false;
-//		
-//		System.out.println("Bienvenue Sur l'application des petits pedestres !!");
-//
-//		
-//		if(!connected){
-//			menu.menuChoixConnexion();
-//		} else {
-//			menu.menuApp();
-//		}
+		Menu menu = new Menu();
+		boolean connected = false;
+		
+		System.out.println("Bienvenue Sur l'application des petits pedestres !!");
 
-		RequeteClient rc = new RequeteClient(controleur.getConn());
+			menu.menuApp();
+
+		/*RequeteClient rc = new RequeteClient(controleur.getConn());
 		Client c = new Client("johndiliger@gmail.com", "diliger", "john", "12 rue de monc", "ahah", false);
 		//rc.addClient(c);
 		
@@ -45,7 +40,7 @@ public class Accueil {
 		Date date = new Date(2016, 01, 27);
 		Commande cmd = new Commande(0, date, 250, c, "envoye", false, new ArrayList<AlbumCommande>());
 		RequeteCommande rcmd = new RequeteCommande(controleur.getConn());
-		rcmd.addCommande(cmd);
+		rcmd.addCommande(cmd);*/
 		
 		
 		

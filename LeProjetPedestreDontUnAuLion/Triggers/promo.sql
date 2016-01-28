@@ -9,4 +9,5 @@ BEGIN
 		montant = NEW.prixTotal * 0,05;
 		insert into promo values (id, NEW.mailClient, montant);
 	END IF;
-END
+END ;
+/

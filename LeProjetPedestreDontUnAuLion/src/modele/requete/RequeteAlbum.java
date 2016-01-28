@@ -17,6 +17,7 @@ public class RequeteAlbum extends Requete{
 
 	public ArrayList<Album> getAllAlbumFromClient (Client client) throws SQLException{
 		int idAlbum;
+		String nom;
 		
 		//requete SQL
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM album WHERE client = ?");
@@ -27,7 +28,8 @@ public class RequeteAlbum extends Requete{
 		ArrayList<Album> res = new ArrayList<Album>();
 		while(rs.next()){
 			idAlbum = rs.getInt("idAlbum");
-			res.add(new Album(idAlbum, client, new RequetePhoto(conn).getAllPhotoFromAlbumId(idAlbum)));
+			nom = rs.getString("nom");
+			res.add(new Album(idAlbum, client, nom, new RequetePhoto(conn).getAllPhotoFromAlbumId(idAlbum)));
 		}
 		
 		return res;
@@ -46,6 +48,7 @@ public class RequeteAlbum extends Requete{
 	
 	public Album getAlbumFromId(int id) throws SQLException{
 		Client client;
+		String nom;
 		Album album = null;
 		//requete SQL
 		PreparedStatement st = conn.prepareStatement("SELECT * FROM album WHERE idAlbum = ?");
@@ -55,7 +58,8 @@ public class RequeteAlbum extends Requete{
 		//resultat
 		if(rs.next()){
 			client = new RequeteClient(conn).getClientByMail(rs.getString("client"));
-			album = new Album(id, client, new RequetePhoto(conn).getAllPhotoFromAlbumId(id));
+			nom = rs.getString("nom");
+			album = new Album(id, client, nom, new RequetePhoto(conn).getAllPhotoFromAlbumId(id));
 		}
 		return album;
 	}
